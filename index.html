@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le Parisien · 2026 年 5 月 23 日 · 2027 总统大选专题摘译</title>
+<style>
+  :root{
+    /* Le Parisien 标志蓝（其网站和报头使用的特征色） */
+    --lp-blue:#1AA8E5;
+    --lp-blue-dark:#0090D6;
+    --noir:#181818;
+    --gris:#8B8B8B;
+    --gris-fonce:#3B3B3B;
+    --gris-clair:#666;
+    --gris-ligne:#D9D9D9;
+    --bg-quote:#F4FAFD;
+    --bg-page:#FFFFFF;
+    --bg-annot:#FFF8E1;
+    --orange:#F4B400;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  html,body{
+    background:var(--bg-page);
+    color:var(--noir);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ====== 仿 leparisien.fr 字体栈 ====== */
+  body{
+    font-family: Arial, Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", sans-serif;
+    font-size:16px;
+    line-height:1.7;
+  }
+  .serif{
+    font-family: "Times New Roman", Times, "Songti SC", "STSong", "Source Han Serif SC", serif;
+  }
+
+  /* ====== 顶部控制栏 ====== */
+  .controls{
+    position:sticky;top:0;z-index:100;
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--gris-ligne);
+    padding:10px 16px;
+    display:flex;flex-wrap:wrap;gap:10px;
+    align-items:center;justify-content:space-between;
+  }
+  .controls .label{
+    font-size:13px;color:var(--gris-clair);font-style:italic;
+  }
+  .ctrl-group{display:flex;gap:8px;flex-wrap:wrap}
+  button.ctrl{
+    border:1px solid var(--gris-ligne);
+    background:#fff;
+    border-radius:999px;
+    padding:6px 14px;
+    font-size:13px;
+    cursor:pointer;
+    color:var(--gris-fonce);
+    transition:all .15s;
+    font-family:inherit;
+  }
+  button.ctrl:hover{border-color:var(--lp-blue);color:var(--lp-blue)}
+  button.ctrl.active{
+    background:var(--lp-blue);color:#fff;border-color:var(--lp-blue);
+  }
+
+  /* ====== Le Parisien IG 风格报头 ====== */
+  .ig-header{
+    max-width:760px;
+    margin:24px auto 0;
+    padding:0 24px 18px;
+    display:flex;align-items:center;gap:12px;
+    border-bottom:1px solid var(--gris-ligne);
+  }
+  .logo-ring{
+    width:54px;height:54px;border-radius:50%;
+    background:conic-gradient(
+      from 45deg,
+      #F58529 0deg,
+      #DD2A7B 80deg,
+      #8134AF 160deg,
+      #515BD4 220deg,
+      #1AA8E5 290deg,
+      #F58529 360deg
+    );
+    padding:3px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .logo-inner{
+    width:100%;height:100%;border-radius:50%;
+    background:var(--lp-blue);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Times New Roman",serif;
+    font-style:italic;font-weight:900;
+    font-size:26px;
+    border:2.5px solid #fff;
+    padding-bottom:2px;
+  }
+  .handle{
+    font-family:Arial,sans-serif;
+    font-weight:700;
+    font-size:18px;
+    color:var(--noir);
+  }
+
+  /* ====== 期号 / 日期条 ====== */
+  .issue-strip{
+    max-width:760px;
+    margin:0 auto;
+    padding:14px 24px 6px;
+    text-align:center;
+    font-family:Arial,sans-serif;
+    font-size:11px;
+    color:var(--gris);
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+  }
+  .issue-strip a{
+    color:inherit;
+    text-decoration:none;
+    border-bottom:1px solid rgba(0,144,214,.35);
+    padding-bottom:1px;
+    transition:all .15s;
+  }
+  .issue-strip a:hover{
+    color:var(--lp-blue-dark);
+    border-bottom-color:var(--lp-blue-dark);
+  }
+  /* ====== 译版署名（上下都有） ====== */
+  .trans-credit{
+    max-width:760px;
+    margin:0 auto;
+    padding:4px 24px 14px;
+    text-align:center;
+    font-size:11px;
+    color:var(--gris);
+    letter-spacing:.8px;
+    font-style:italic;
+  }
+  .trans-credit.top{
+    border-bottom:1px solid var(--lp-blue);
+  }
+  .trans-credit.bottom{
+    padding:18px 24px 40px;
+    border-top:1px solid var(--gris-ligne);
+    margin-top:8px;
+  }
+
+  /* ====== 主区域 ====== */
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 24px 60px;
+  }
+
+  /* ====== 文章 ====== */
+  article{
+    padding:38px 0;
+    border-bottom:1px solid var(--gris-ligne);
+  }
+  article:last-child{border-bottom:0}
+
+  .rubrique{
+    font-family: Arial, sans-serif;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:1.5px;
+    color:var(--lp-blue-dark);
+    text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .rubrique .dot{margin:0 8px;opacity:.5}
+
+  h1.titre{
+    font-family: "Times New Roman", Times, "Songti SC", serif;
+    font-weight:900;
+    font-size:36px;
+    line-height:1.22;
+    color:var(--noir);
+    margin-bottom:14px;
+    letter-spacing:-.3px;
+  }
+  @media(max-width:600px){
+    h1.titre{font-size:26px}
+  }
+
+  .chapo{
+    font-size:17px;
+    line-height:1.65;
+    color:var(--gris-fonce);
+    margin-bottom:18px;
+    font-weight:500;
+  }
+  .chapo em, article em{font-style:italic}
+
+  .signature{
+    font-size:12px;
+    color:var(--gris);
+    margin-bottom:28px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--gris-ligne);
+    letter-spacing:.3px;
+    font-style:italic;
+  }
+
+  h2.intertitre{
+    font-family: "Times New Roman", Times, "Songti SC", serif;
+    font-weight:700;
+    font-size:21px;
+    color:var(--noir);
+    margin:32px 0 14px;
+    line-height:1.3;
+  }
+
+  article p{
+    margin-bottom:14px;
+    font-size:16px;
+  }
+
+  blockquote.lead{
+    background:var(--bg-quote);
+    border-left:4px solid var(--lp-blue);
+    padding:22px 26px;
+    margin:24px 0;
+  }
+  blockquote.lead .zh{
+    font-family: "Times New Roman", Times, "Songti SC", serif;
+    font-size:15.5px;
+    line-height:1.7;
+    color:#0A3553;
+    font-weight:500;
+  }
+  blockquote.lead .fr{
+    font-family: "Times New Roman", Times, serif;
+    font-size:12.5px;
+    line-height:1.65;
+    color:#1A4E73;
+    font-style:italic;
+    margin-top:12px;
+    padding-top:12px;
+    border-top:1px dashed rgba(0,144,214,.3);
+  }
+  blockquote.lead .attr{
+    margin-top:12px;
+    font-size:12.5px;
+    color:var(--gris);
+  }
+
+  .quote-fr{
+    font-family: "Times New Roman", Times, serif;
+    font-style:italic;
+    font-size:14.5px;
+    line-height:1.65;
+    color:var(--gris-fonce);
+    background:var(--bg-quote);
+    border-left:3px solid var(--lp-blue);
+    padding:8px 14px;
+    margin:8px 0 14px 0;
+  }
+  .quote-fr .src{
+    font-style:normal;
+    font-size:11.5px;
+    color:var(--gris);
+    margin-left:8px;
+    letter-spacing:.2px;
+  }
+
+  .annot{
+    border-bottom:1.5px dotted var(--lp-blue);
+    cursor:help;
+    color:var(--lp-blue-dark);
+    font-weight:500;
+  }
+  .annot sup{
+    font-size:13px;font-weight:700;
+    margin-left:2px;
+    color:var(--lp-blue);
+    vertical-align:super;
+    line-height:0;
+  }
+  .annot:hover{background:var(--bg-annot)}
+  .annot-text{
+    display:none;
+    margin:8px 0 12px;
+    padding:11px 14px;
+    background:var(--bg-annot);
+    border-left:3px solid var(--orange);
+    font-size:13.5px;
+    line-height:1.65;
+    color:var(--gris-fonce);
+    font-style:normal;
+  }
+  .annot-text strong{color:var(--noir);font-weight:600}
+  .annot-text em{font-style:italic}
+  body.show-annots .annot-text{display:block}
+  body.show-annots .annot{background:var(--bg-annot)}
+  .annot.popped + .annot-text{display:block}
+
+  /* ====== 候选人格局 encadré ====== */
+  .candidates-aside{
+    margin:32px 0 8px;
+    padding:22px 22px 16px;
+    background:#F4FAFD;
+    border-top:3px solid var(--lp-blue);
+    border-bottom:1px solid var(--gris-ligne);
+  }
+  .aside-label{
+    font-family:Arial,sans-serif;
+    font-weight:700;
+    font-size:10.5px;
+    letter-spacing:1.5px;
+    color:var(--lp-blue-dark);
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .aside-title{
+    font-family:"Times New Roman",Times,"Songti SC",serif;
+    font-weight:900;
+    font-size:21px;
+    color:var(--noir);
+    margin-bottom:4px;
+    line-height:1.3;
+  }
+  .aside-subtitle{
+    font-size:11.5px;
+    color:var(--gris-clair);
+    font-style:italic;
+    margin-bottom:16px;
+    letter-spacing:.3px;
+  }
+  .candidates-list{
+    list-style:none;
+    margin:0;padding:0;
+  }
+  .candidates-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:11px 0;
+    border-bottom:1px dashed rgba(0,144,214,.18);
+  }
+  .candidates-list li:last-child{border-bottom:0}
+  .candidates-list li.latest{
+    background:rgba(26,168,229,.06);
+    margin:0 -10px;
+    padding:11px 10px;
+    border-radius:4px;
+    border-bottom:0;
+  }
+  .cand-num{
+    flex-shrink:0;
+    width:24px;height:24px;
+    border-radius:50%;
+    background:#fff;
+    border:1.5px solid var(--lp-blue);
+    color:var(--lp-blue-dark);
+    display:flex;align-items:center;justify-content:center;
+    font-family:Arial,sans-serif;
+    font-size:12px;font-weight:700;
+    margin-top:1px;
+  }
+  .latest .cand-num{
+    background:var(--lp-blue);
+    color:#fff;
+  }
+  .cand-body{
+    flex:1;
+    min-width:0;
+  }
+  .cand-name{
+    font-size:15px;
+    line-height:1.4;
+    color:var(--noir);
+    margin-bottom:3px;
+  }
+  .cand-name strong{font-weight:700}
+  .cand-party{
+    font-family:Arial,sans-serif;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:.8px;
+    color:var(--lp-blue-dark);
+    background:rgba(26,168,229,.12);
+    padding:2px 7px;
+    border-radius:3px;
+    margin-left:6px;
+    text-transform:uppercase;
+    vertical-align:middle;
+    display:inline-block;
+  }
+  .cand-flag{
+    font-family:Arial,sans-serif;
+    font-size:10px;
+    font-weight:700;
+    color:#fff;
+    background:var(--lp-blue);
+    padding:2px 7px;
+    border-radius:3px;
+    margin-left:6px;
+    letter-spacing:.5px;
+    vertical-align:middle;
+    display:inline-block;
+  }
+  .cand-meta{
+    font-size:12.5px;
+    line-height:1.55;
+    color:var(--gris-fonce);
+  }
+  .cand-meta em{font-style:italic}
+  .cand-quote-zh{
+    font-size:11.5px;
+    color:var(--gris-clair);
+    font-style:italic;
+    margin-top:4px;
+    padding-left:10px;
+    border-left:2px solid rgba(0,144,214,.3);
+    line-height:1.5;
+  }
+
+  /* ====== 目录导航 TOC ====== */
+  .toc{
+    max-width:760px;
+    margin:24px auto 0;
+    padding:18px 24px 22px;
+    background:#fff;
+    border-top:1px solid var(--gris-ligne);
+    border-bottom:1px solid var(--gris-ligne);
+  }
+  .toc-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .toc-label{
+    font-family:Arial,sans-serif;
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:1.5px;
+    color:var(--lp-blue-dark);
+    text-transform:uppercase;
+  }
+  .toc-meta{
+    font-size:11px;
+    color:var(--gris-clair);
+    font-style:italic;
+    letter-spacing:.3px;
+  }
+  .toc-list{
+    list-style:none;
+    margin:0;padding:0;
+  }
+  .toc-list li{
+    border-bottom:1px dashed var(--gris-ligne);
+  }
+  .toc-list li:last-child{border-bottom:0}
+  .toc-list a{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:11px 0;
+    text-decoration:none;
+    color:inherit;
+    transition:background .15s;
+  }
+  .toc-list a:hover{
+    background:rgba(26,168,229,.04);
+    margin:0 -10px;
+    padding-left:10px;
+    padding-right:10px;
+  }
+  .toc-num{
+    flex-shrink:0;
+    font-family:Arial,sans-serif;
+    font-weight:700;
+    font-size:18px;
+    color:var(--lp-blue);
+    line-height:1;
+    width:30px;
+    padding-top:2px;
+  }
+  .toc-title{
+    flex:1;
+    min-width:0;
+  }
+  .toc-title strong{
+    display:block;
+    font-family:"Times New Roman",Times,"Songti SC",serif;
+    font-weight:700;
+    font-size:15.5px;
+    color:var(--noir);
+    line-height:1.35;
+    margin-bottom:3px;
+  }
+  .toc-title em{
+    font-family:Arial,sans-serif;
+    font-style:normal;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:1.2px;
+    color:var(--gris-clair);
+    text-transform:uppercase;
+  }
+
+  /* ====== 回到顶部 ====== */
+  .back-top{
+    position:fixed;
+    bottom:24px;right:24px;
+    width:44px;height:44px;
+    border-radius:50%;
+    background:var(--lp-blue);
+    color:#fff;
+    border:0;
+    box-shadow:0 4px 12px rgba(0,144,214,.35);
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(8px);
+    transition:all .25s ease;
+    z-index:90;
+    font-family:Arial,sans-serif;
+    line-height:1;
+  }
+  .back-top.visible{
+    opacity:1;
+    pointer-events:auto;
+    transform:translateY(0);
+  }
+  .back-top:hover{
+    background:var(--lp-blue-dark);
+    box-shadow:0 6px 16px rgba(0,144,214,.5);
+  }
+
+  .source-footer{
+    max-width:760px;margin:0 auto;
+    padding:30px 24px 60px;
+    font-size:12px;color:var(--gris);line-height:1.8;
+    text-align:center;
+    font-style:italic;
+  }
+  .source-footer .footer-block{
+    padding:4px 0;
+  }
+  .source-footer .footer-block.fr{
+    font-family:"Times New Roman",Times,serif;
+  }
+  .source-footer .footer-divider{
+    width:60px;
+    height:1px;
+    background:var(--gris-ligne);
+    margin:16px auto;
+  }
+  .source-footer a{
+    color:var(--lp-blue-dark);
+    text-decoration:none;
+    border-bottom:1px solid rgba(0,144,214,.3);
+    font-style:normal;
+  }
+  .source-footer a:hover{
+    color:var(--lp-blue);
+    border-bottom-color:var(--lp-blue);
+  }
+
+  @media print{
+    html,body{background:#fff}
+    .controls{display:none}
+    body.show-annots .annot-text,
+    .annot.popped + .annot-text{display:block !important}
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <span class="label">Le Parisien · 2027 总统大选专题摘译</span>
+  <div class="ctrl-group">
+    <button class="ctrl" id="toggleAnnots">📖 显示所有注释</button>
+    <button class="ctrl" onclick="window.print()">🖨 打印 / 保存 PDF</button>
+  </div>
+</div>
+
+<header class="ig-header">
+  <div class="logo-ring">
+    <div class="logo-inner">P</div>
+  </div>
+  <span class="handle">leparisien</span>
+</header>
+
+<div class="issue-strip">
+  SAMEDI 23 MAI 2026 · N° 25426 · 2027 总统大选专题
+</div>
+<div class="trans-credit top">中文译版 · Claude (Anthropic) 制</div>
+
+<!-- ============ 目录导航 ============ -->
+<nav class="toc">
+  <div class="toc-head">
+    <span class="toc-label">SOMMAIRE · 本期目录</span>
+    <span class="toc-meta">4 个版块 · 约 8 分钟阅读</span>
+  </div>
+  <ol class="toc-list">
+    <li><a href="#art-attal"><span class="toc-num">01</span><span class="toc-title"><strong>Gabriel Attal 把参选「搬上舞台」</strong><em>POLITIQUE · PRÉSIDENTIELLE 2027</em></span></a></li>
+    <li><a href="#art-phrygiens"><span class="toc-num">02</span><span class="toc-title"><strong>LFI 的「Phrygiens」：暗中预备执政的高级文官网</strong><em>POLITIQUE · LFI</em></span></a></li>
+    <li><a href="#art-candidates"><span class="toc-num">03</span><span class="toc-title"><strong>2027 已宣布参选者格局</strong><em>CONTEXTE</em></span></a></li>
+    <li><a href="#art-farandou"><span class="toc-num">04</span><span class="toc-title"><strong>Farandou 与「劳动新政」</strong><em>ENTRETIEN · TRAVAIL</em></span></a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ============ ARTICLE 1 : ATTAL ============ -->
+<article id="art-attal">
+  <div class="rubrique">POLITIQUE <span class="dot">·</span> PRÉSIDENTIELLE 2027</div>
+
+  <h1 class="titre">Gabriel Attal 把参选「搬上舞台」</h1>
+
+  <p class="chapo">
+    这已是公开的秘密。周五，在 <em>Aveyron</em> 省的乡村土地上，<em>Renaissance</em> 党魁正式加入 <em>Élysée</em> 之争，
+    据其团队成员，开启一场
+    <span class="annot" data-pop="cp">「<em>campagne permanente</em>」<sup>*</sup></span>。
+  </p>
+  <div class="annot-text"><strong>campagne permanente</strong> 政治传播学术语，源自美国记者（后克林顿政府高级顾问）Sidney Blumenthal 1980 年同名著作《The Permanent Campaign》。原指执政期间持续维持竞选模式、模糊治理与竞选边界。本文中 Attal 团队成员借此词，意指其从宣布之日起到 2027 年大选将不停歇地展开竞选活动；与 Blumenthal 原义略有偏移。</div>
+
+  <p class="signature">
+    特派记者 Alison Tassin、Thomas Soulié，发自 Mur-de-Barrez ── Aveyron 省
+  </p>
+
+  <h2 class="intertitre">精心设计的舞台布景</h2>
+
+  <p>
+    时光回到 2002 年 2 月，当时 Gabriel Attal 年仅 13 岁。时任总统 <em>Jacques Chirac</em> 在临时回答
+    <em>Avignon</em> 市长 <em>Marie-Josée Roig</em> 的提问时，宣布竞选连任。任何相似之处都绝非偶然。
+  </p>
+
+  <p>
+    二十四年后，任何「自发行为」其实都成了精心编排与舞台呈现 ── 本周五，在仅有 700 名居民的 <em>Aveyron</em> 省
+    <em>Mur-de-Barrez</em> 村，这位三十多岁的政治家很清楚 <em>Renaissance</em> 籍村长 <em>Pierre Ignace</em>
+    会在居民和几十位特意赶来的记者面前就这一话题向他提问。
+    现场布置颇有乡土气息：村级广场上挂着法国国旗。不过，这位新晋候选人依然西装革履，没有脱下外衣。
+    「美则美矣，可惜远了点」── 这句 <em>Jacques Chirac</em> 式的名言，仿佛也能照应到这一场景（« <em>C'est beau, mais c'est loin</em> »）。
+  </p>
+
+  <p>
+    在与当地居民进行约 30 分钟的微型辩论之后，即将宣布参选的前总理身上依然透着一丝年轻政治家的紧绷，他终于开口：
+  </p>
+
+  <blockquote class="lead">
+    <p class="zh">「我深爱法国，爱她的风景，爱她的智慧。我深爱法国人民。我渴望有所作为。因此，是的，我决定竞选共和国总统。」</p>
+    <p class="fr">« J'aime profondément la France, ses paysages, son génie. J'aime profondément les Français. J'ai une ambition de l'élévation. Donc oui, j'ai décidé d'être candidat à la présidence de la République. »</p>
+    <p class="attr">— Gabriel Attal，5 月 22 日于 Mur-de-Barrez</p>
+  </blockquote>
+
+  <h2 class="intertitre">「Philippe 身上的巴黎味儿不比 Attal 少」</h2>
+
+  <p>
+    <em>Renaissance</em> 团队为这次大选运动中至关重要的「官宣时刻」筹划了数周。党内二号人物
+    <em>Franck Riester</em> 评价：「我们是唯一在田野里这么做的。」他借此暗讽通过《<em>Le Point</em>》宣布参选的
+    <em>Édouard Philippe</em>、在讲台前宣布的 <em>Bruno Retailleau</em>，以及在电视新闻演播室宣布的
+    <em>Jean-Luc Mélenchon</em>。Riester 补充：「这是一个重要的步骤，因为只要还没正式宣布，就总会有声音说你可能会退缩。」
+  </p>
+
+  <p class="quote-fr">« On est les seuls à le faire sur le terrain. » <span class="src">— Franck Riester</span></p>
+
+  <p>
+    <em>Emmanuel Macron</em> 的一位顾问常说：「<em>Le message, c'est le paysage</em>」── 信息就蕴含在风景之中，
+    意在强调形式的重要性。但不可否认的是，Gabriel Attal 的形象更多被外界与
+    <span class="annot" data-pop="jp">「<em>jeune premier parisien</em>」<sup>*</sup></span>
+    联系在一起，而非扎根土地的乡村候选人。
+  </p>
+  <div class="annot-text"><strong>jeune premier parisien</strong>「jeune premier」原是 19 世纪法国戏剧术语，指剧团里饰演年轻男主角的青年小生 ── 漂亮、风度好、扮演情人或正面青年。在政治评论中借用此语，形容一位过于年轻、过于光鲜、过于巴黎气的政客形象，常带「缺乏乡土厚度」的弦外之音。</div>
+
+  <p>
+    「Philippe 身上的巴黎味儿一点也不比 Attal 少」── 一位 Attal 身边人对这种针对其背景的冷嘲热讽感到厌烦。
+  </p>
+
+  <p>
+    而被 Attal 造访的当地村民也十分清醒。村民 <em>Martine</em> 微笑着说：
+    「政治里从没有绝对的真诚，总会有幕后的盘算。」
+  </p>
+
+  <p>
+    两位退休老人 <em>Line</em> 和 <em>Albert</em> 在周日得知村长组织了一场交流活动，但「神秘嘉宾」的名字
+    一直被保密到最后一刻。他们笑着说：「我们是今天早上在面包店里才知道的。」
+    在炎炎烈日下，Attal 也说服了一些围观群众。村民 <em>Ginette</em>：「我很惊喜，这非常好。他讲话时态度很积极，
+    现在正需要这样的人！」
+  </p>
+
+  <h2 class="intertitre">政策纲领与竞选节奏</h2>
+
+  <p>
+    成为候选人之后便是推出政治纲领。在首次公开表态中 Attal 已经透露方向。作为前国民教育部长，
+    他将目标锁定在 <em>école</em> 上：「对我来说最重要的议题，就是 école。」
+    他希望开展一场「乐观」的竞选，并暗讽 2027 年的潜在对手只会谈
+    <span class="annot" data-pop="declin">「<em>cinquante nuances de gestion du déclin</em>」<sup>*</sup></span> ──
+    原文记者指此话直指中间派同阵营的 <em>Édouard Philippe</em>。
+  </p>
+  <div class="annot-text"><strong>cinquante nuances de gestion du déclin</strong>「衰落管理的五十种灰度」。借用 E. L. James 小说《<em>Fifty Shades of Grey</em>》的法语译名《<em>Cinquante Nuances de Grey</em>》做戏仿，讽刺对手只在「如何管理国家衰落」这一悲观前提上做细微差别的文章。</div>
+
+  <p>
+    参选声明一发布，村庄中心便响起 «<em> La Marseillaise </em>»，Attal 随即投入竞选状态，一秒钟都不肯耽误。
+    在巨大的锅台后，这位 <em>Renaissance</em> 党魁在闪光灯下，用大木铲亲手搅拌起当地传统美食
+    <span class="annot" data-pop="aligot"><em>aligot</em><sup>*</sup></span>。
+  </p>
+  <div class="annot-text"><strong>aligot</strong> 法国中央高原 <em>Aveyron-Aubrac</em> 一带的传统菜肴，用 <em>tomme fraîche</em> 鲜奶酪、土豆泥与黄油揉合而成，需要用木铲长时间拉拽，会拉出有弹性的丝。在乡村集会中现场拉 aligot 是地方仪式感强烈的待客方式。</div>
+
+  <p>
+    团队成员承诺：「这是一场全速前进的竞选的开始。」Attal 下周将在巴黎举行造访与集会，6 月初将面向
+    志愿者发起「闪电派发传单」行动，并推出一款专供党内志愿者使用的应用程序；整个夏天的全法巡回不间断。身边人士表示：
+    「<span class="annot" data-pop="outsider"><em>outsider</em><sup>*</sup></span> 的角色非常适合他。他清醒地知道自己是追赶者，但他也是最渴望赢的那个人。
+    欢迎来到 <em>campagne permanente</em> 时代！」
+  </p>
+  <div class="annot-text"><strong>outsider</strong> 英语借词，在法语政治评论里指非领跑、非头号种子的候选人，与 <em>challenger</em>（挑战者）同义。本文中指 Attal 在中间阵营内部并非民调领先者 ── <em>Édouard Philippe</em> 长期占据头号位置 ── 他以「追赶者」姿态切入 2027 大选。</div>
+</article>
+
+
+<!-- ============ ARTICLE 2 : LFI / PHRYGIENS ============ -->
+<article id="art-phrygiens">
+  <div class="rubrique">POLITIQUE <span class="dot">·</span> LFI <span class="dot">·</span> PRÉSIDENTIELLE 2027</div>
+
+  <h1 class="titre">LFI 的「Phrygiens」：一张暗中预备执政的高级文官网</h1>
+
+  <p class="chapo">
+    在第四次冲击 <em>Élysée</em> 的征程中，<em>Jean-Luc Mélenchon</em> ── 这位 <em>François Mitterrand</em> 的崇拜者、<em>Lionel Jospin</em> 政府前部长 ──
+    深知国家机器运转之复杂。「准备好」执行其纲领《<em>L'Avenir en commun</em>》，是他多年来的执念之一。为此他倚靠一个比以往更有结构的高级公务员秘密圈层准备执政。它已有代号：
+    <span class="annot" data-pop="phryg"><em>réseau des Phrygiens</em><sup>*</sup></span>。
+  </p>
+  <div class="annot-text"><strong>réseau des Phrygiens</strong> 名字典出法国大革命中 <em>sans-culottes</em> 所戴的 <em>bonnet phrygien</em>──弗里吉亚帽，红色尖顶软帽，是自由的象征。2024 年巴黎奥运会与残奥会的吉祥物 <em>Phryges</em> 即以此帽为造型。LFI 借此名为其高级文官圈层赋予革命传统的象征意涵。</div>
+
+  <h2 class="intertitre">智囊网络的日常</h2>
+
+  <p>
+    多年来，Mélenchon 的好友、国务参事 <em>Bernard Pignerol</em>（人称「人脉广博的智者」，于 2023 年去世）
+    长期为这一影子网络的搭建奔走。如今，接棒此项任务的众多人选之一，正是 LFI 国民议会副议长、
+    <em>Val-de-Marne</em> 省议员 <em>Clémence Guetté</em>。
+  </p>
+
+  <p>
+    网络核心成员约 30 人，包含许多在各大核心国家部委和高等机构中任职的高级公务员。
+    本周二，5 月 19 日晚，由《<em>L'Avenir en commun</em>》纲领总协调人 Guetté 主持，约三十人举行了实体会议。
+    Guetté 同时也是 <em>Institut La Boétie</em> 共同主席。
+    一位 LFI 骨干透露：「我们争取到了一些很好的人选，有人正在国家核心高层机构为我们秘密工作。
+    但我们必须保护他们……」── 一旦其党派立场被现任政府察觉，可能遭到边缘化。
+  </p>
+
+  <h2 class="intertitre">政策准备与外交启动</h2>
+
+  <p>
+    他们的工作路线图很清晰：既以自身知识与经验为候选人、团队、纲领提供养分；
+    同时为 Mélenchon 一旦胜选后的执政落地铺路。一位 LFI 成员证实：
+    「他们将整理竞选文件，并具体规划我们一旦执政后要做的事。我们在多个部委已经有人手在准备方案。」
+    但一位 LFI 议员也提出了警告：「不过我们不能让县长们替我们写纲领，像 <em>PS</em> 那样。」
+  </p>
+
+  <p>
+    Mélenchon 团队正在为其撰写新版施政纲领《<em>L'Avenir en commun</em>》，预计今年秋季正式公布。
+    国际外交层面亦活跃：自 5 月 3 日 Mélenchon 宣布参选以来，团队已收到大量驻法使馆的接触请求 ──
+    <em>Égypte</em>、<em>Suède</em>、<em>Finlande</em>、<em>Norvège</em>、<em>Danemark</em>、<em>Islande</em>、
+    <em>Lettonie</em>、<em>Lituanie</em>、<em>Estonie</em>、<em>Jordanie</em>、<em>Cuba</em>、
+    <em>Royaume-Uni</em>、<em>Chine</em>、<em>Liban</em>……一位 LFI 战略师预判：
+    「因为国际议题将在这次大选中起决定性作用。」对自身实力深信不疑的 Mélenchon 与团队，
+    比以往任何一次都更积极地为执政做准备。
+  </p>
+
+  <h2 class="intertitre">其他政党的先例</h2>
+
+  <p>
+    LFI 并非唯一依赖影子高级文官支持的政党。原文记者指出，所有「认真」的总统候选人几乎都依托类似暗线。
+    <em>RN</em> 长期拥有一个名为
+    <span class="annot" data-pop="horac">「<em>Les Horaces</em>」<sup>*</sup></span>
+    的极右翼高官网络，目前由欧洲议员 <em>André Rougé</em> 领导。
+  </p>
+  <div class="annot-text"><strong>Les Horaces</strong> 古罗马传说中的贺拉斯三兄弟（<em>Horatii</em>），象征忠诚捍卫共和国。法国总统候选人身边的高级公务员智囊圈在历史上由 Macron 团队首次以此命名，后被各阵营借用；本文中专指 <em>RN</em> 的版本。</div>
+</article>
+
+
+<!-- ============ 2027 候选人格局 侧栏 ============ -->
+<aside class="candidates-aside" id="art-candidates">
+  <div class="aside-label">CONTEXTE · ÉLECTION PRÉSIDENTIELLE 2027</div>
+  <h3 class="aside-title">已宣布参选者格局</h3>
+  <p class="aside-subtitle">截至 2026 年 5 月 23 日 · Au 23 mai 2026</p>
+  <ol class="candidates-list">
+    <li>
+      <span class="cand-num">1</span>
+      <div class="cand-body">
+        <div class="cand-name"><strong>Jean-Luc Mélenchon</strong> <span class="cand-party">LFI</span></div>
+        <div class="cand-meta">2026 年 5 月 3 日 · 电视演播室宣布 · 第四次冲击总统大选</div>
+      </div>
+    </li>
+    <li>
+      <span class="cand-num">2</span>
+      <div class="cand-body">
+        <div class="cand-name"><strong>Édouard Philippe</strong> <span class="cand-party">Horizons</span></div>
+        <div class="cand-meta">2024 年 9 月 · 通过《<em>Le Point</em>》杂志宣布 · 前总理、Le Havre 市长</div>
+      </div>
+    </li>
+    <li>
+      <span class="cand-num">3</span>
+      <div class="cand-body">
+        <div class="cand-name"><strong>Bruno Retailleau</strong> <span class="cand-party">LR</span></div>
+        <div class="cand-meta">2026 年 2 月 12 日 · 讲台前视频致辞宣布 · 前内政部长、LR 党主席</div>
+      </div>
+    </li>
+    <li>
+      <span class="cand-num">4</span>
+      <div class="cand-body">
+        <div class="cand-name"><strong>David Lisnard</strong> <span class="cand-party">Cannes 市长</span></div>
+        <div class="cand-meta">
+          主张废除 <span class="annot" data-pop="cese"><em>CESE</em><sup>*</sup></span><div class="annot-text"><strong>CESE</strong> <em>Conseil économique, social et environnemental</em>（经济、社会与环境理事会），法国宪法咨询机构，由 175 位「中间团体」代表（协会、工会、雇主组织）组成，年度预算约 3400 万欧元。2021 年曾改革以缩减规模、引入公民请愿权，但在右翼与极右翼阵营长期被质疑「功能与既有机构重叠、运作不透明」。Lisnard 此番表态出自《Le Parisien》当期 P.6 关于 CESE 受废除威胁的报道。</div>：« <em>Nous supprimerons cet organisme inutile.</em> »
+          <div class="cand-quote-zh">「我们将废除这个无用的机构。」</div>
+        </div>
+      </div>
+    </li>
+    <li class="latest">
+      <span class="cand-num">5</span>
+      <div class="cand-body">
+        <div class="cand-name"><strong>Gabriel Attal</strong> <span class="cand-party">Renaissance</span> <span class="cand-flag">本期主报道</span></div>
+        <div class="cand-meta">2026 年 5 月 22 日 · Mur-de-Barrez（Aveyron）· 前总理</div>
+      </div>
+    </li>
+  </ol>
+</aside>
+
+
+<!-- ============ ARTICLE 3 : FARANDOU ============ -->
+<article id="art-farandou">
+  <div class="rubrique">ENTRETIEN <span class="dot">·</span> TRAVAIL <span class="dot">·</span> 2027 视野</div>
+
+  <h1 class="titre">Farandou 与「劳动新政」</h1>
+
+  <p class="chapo">
+    在政府宣布油价补助方案的次日、
+    <span class="annot" data-pop="smic"><em>SMIC</em><sup>*</sup></span>
+    将于 6 月 1 日上调 2.41% 之际，<em>Jean-Pierre Farandou</em> ──
+    前
+    <span class="annot" data-pop="sncf"><em>SNCF</em><sup>*</sup></span>
+    集团总裁、现任劳动部长 ── 在《<em>Le Parisien</em>》专访中为政府政策辩护。同时透露：
+    他正积极筹备一套关于「<em>new deal sur le travail</em>」的具体提案，希望被 2027 年的候选人广泛采纳。
+  </p>
+  <div class="annot-text"><strong>SMIC</strong> <em>Salaire Minimum Interprofessionnel de Croissance</em>（跨行业最低增长工资），法国 1970 年立法确立的法定最低工资制度，每年根据通胀与实际工资增长情况至少调整一次。2026 年 6 月 1 日的本次上调 2.41%，对应毛月薪约 1846 欧元 / 时薪约 12.16 欧元。</div>
+  <div class="annot-text"><strong>SNCF</strong> <em>Société Nationale des Chemins de fer Français</em>（法国国家铁路公司），1938 年成立的国营铁路企业，长期是法国最大雇主之一。Farandou 于 2019–2024 年间任 SNCF 集团总裁，2024 年入阁出任劳动部长。</div>
+
+  <h2 class="intertitre">新政的核心关注</h2>
+
+  <p>
+    Farandou 列出他准备探讨的议题：财富的创造与合理分配；管理模式的现代化；劳动适应新的社会与
+    家庭诉求；年轻人及高龄工人的就业转型；AI 与机器人技术引发的技术变革；
+    应对生态紧迫性；薪酬与劳动力成本；社会保障融资。两根承重梁则在他口中表达为：
+    劳动创造财富 ── 要先创造、再分配；劳动是个人发展的途径。
+  </p>
+
+  <h2 class="intertitre">他的政治归属</h2>
+
+  <p>
+    被问及是否会将这些方案专门提供给某一位候选人时，Farandou 回答：
+  </p>
+
+  <blockquote class="lead">
+    <p class="zh">「我在整个中间阵营内部都感到自在。从 <em>PS</em> 到 <em>LR</em>、以及中间派所有党派，我都与他们保持着非常顺畅的接触。」</p>
+    <p class="fr">« Je me sens à l'aise dans tout le bloc central. J'ai des contacts très fluides avec tous les partis du PS aux LR, en passant par les centristes. »</p>
+    <p class="attr">— Jean-Pierre Farandou，劳动部长</p>
+  </blockquote>
+
+  <h2 class="intertitre">当前其它工作</h2>
+
+  <p>
+    Farandou 将于 5 月 27 日召开全国薪资跟踪委员会，与所有社会伙伴会面。目前仍有 44 个行业的协议下限低于
+    <em>SMIC</em>；他不主张「拍桌子」，而是依据 2026 年社保融资法第 20 条对一年内未达标行业的企业削减社保减免。
+    欧盟「<em>directive européenne sur la transparence salariale</em>」转化期限为 6 月 7 日，
+    转化法案拟初夏入部长会议、秋季表决；不少
+    <span class="annot" data-pop="drh"><em>DRH</em><sup>*</sup></span>
+    要求给企业更多准备时间，希望明年 1 月起施行。
+  </p>
+  <div class="annot-text"><strong>DRH</strong> <em>Directeur(rice) des Ressources Humaines</em>（人力资源总监）。在法国劳资协商体系中，DRH 是工会谈判的直接对手方之一，其立场往往直接影响政策落地节奏。</div>
+</article>
+
+</main>
+
+<footer class="source-footer">
+  <div class="footer-block">
+    摘译自 <em>Le Parisien</em> · 2026 年 5 月 23 日 · N° 25426<br>
+    原文电子版：<a href="https://www.kiosque.leparisien.fr/" target="_blank" rel="noopener">kiosque.leparisien.fr</a>（订阅用户登录后翻至 2026 年 5 月 23 日当期）<br>
+    原文著作权归 <em>Le Parisien libéré SAS</em> 所有 — <em>Tous droits réservés</em><br>
+    本页为非授权个人摘译稿，仅供非商业化的法语学习交流<br>
+    禁止任何商业用途、复制转载、改编、上传或二次出版页面内容<br>
+    如需引用，请以 <em>Le Parisien</em> 原报道为准并标明出处
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-block fr">
+    Source : <em>Le Parisien</em> · 23 mai 2026 · N° 25426<br>
+    Article original : <a href="https://www.kiosque.leparisien.fr/" target="_blank" rel="noopener">kiosque.leparisien.fr</a> (les abonnés peuvent y consulter le numéro du 23 mai 2026)<br>
+    © <em>Le Parisien libéré SAS</em> — <em>Tous droits réservés</em><br>
+    Cette page est une traduction personnelle non autorisée, à des fins exclusivement non commerciales et d'apprentissage du français<br>
+    Toute utilisation commerciale, reproduction, modification, mise en ligne ou republication du contenu est interdite<br>
+    Pour toute citation, veuillez vous référer à l'article original du <em>Parisien</em> en mentionnant la source
+  </div>
+</footer>
+
+<div class="trans-credit bottom">中文译版 · Claude (Anthropic) 制</div>
+
+<button class="back-top" id="backTop" aria-label="回到顶部" title="回到顶部">↑</button>
+
+<script>
+  const btn = document.getElementById('toggleAnnots');
+  btn.addEventListener('click', () => {
+    const on = document.body.classList.toggle('show-annots');
+    btn.textContent = on ? '📖 隐藏所有注释' : '📖 显示所有注释';
+    btn.classList.toggle('active', on);
+  });
+
+  document.querySelectorAll('.annot').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.querySelectorAll('.annot.popped').forEach(o => {
+        if(o !== el) o.classList.remove('popped');
+      });
+      el.classList.toggle('popped');
+    });
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.annot.popped').forEach(o => o.classList.remove('popped'));
+  });
+
+  // 回到顶部
+  const backTop = document.getElementById('backTop');
+  const showAfter = 600;
+  function updateBackTop(){
+    if(window.scrollY > showAfter){
+      backTop.classList.add('visible');
+    } else {
+      backTop.classList.remove('visible');
+    }
+  }
+  window.addEventListener('scroll', updateBackTop, {passive:true});
+  updateBackTop();
+  backTop.addEventListener('click', () => {
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+</script>
+
+</body>
+</html>
